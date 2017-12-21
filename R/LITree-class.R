@@ -54,7 +54,6 @@ GGM.experiment <- R6Class("GGMexperiment",
 
                                         if ((is.data.frame(X.list))||(is.matrix(X.list)))  {X.list<-list(X.list)}
                                         p<-ncol(X.list[[1]])
-                                        print(paste("dim of X:",p))
                                         self$X.list<-X.list
                                         self$nb.sample <- length(X.list)
                                         self$methods<-methods
@@ -157,7 +156,6 @@ GGM.fit <- R6Class("GGMfit",
                         run<-0
                         for (X in X.list){
                             run<-run+1
-                            print(dim(X))
                             K.score.array[,,run]<-private$runSimple(X)
                         }
                         self$K.score <- apply(K.score.array,c(1,2),mean)
@@ -184,7 +182,6 @@ GGM.fit <- R6Class("GGMfit",
                              glasso={ # Meinhausen and Buhlman method (approx =TRUE) otherwise classical GLASSO
                                if (nb.missing.var !=0) stop("Glasso works only with nb.missing.var=0")
                                S = cov(X)
-                               print(dim(X))
                                log.lambda.min <- -5
                                log.lambda.max <- log(get.lambda.l1(S))
                                log.lambda <- seq(log.lambda.min, log.lambda.max, length.out = fit.number )
@@ -257,7 +254,6 @@ GGM.model  <-  R6Class("GGMsimul",
                            } else {
                              self$graph = graph.model$new(type=type,size=size, p.or.m =p.or.m,eta=eta,extraeta=extraeta)
                            }
-                           print(dim(self$graph$adjmat))
                            # Dealing with missing variable: choosing the nodes of highest degree
                            if (nb.missing.var > 0) {
                              self$missing.var.list = chooseMissingVar(self$graph$adjmat,nb.missing.var)
