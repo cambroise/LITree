@@ -1,0 +1,21 @@
+Package: LITree
+Type: Package
+Title: Latent Incomplete Tree Inference via Graphical Gaussian Model
+Version: 0.1.0
+Author: Geneviève Robin and Christophe Ambroise and Stéphane Robin
+Maintainer: Christophe Ambroise <christophe.ambroise@univ-evry.fr>
+Description: From a dataframe LITree infers a graphical model assuming that some variables 
+    may be missing
+License: GPL>=2
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1.9000
+Imports: Matrix, ggplot2, glasso, saturnin, simone, MASS, R6, ROCR, bnlearn, cluster, igraph
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
+Collate: 
+   functions-simulation.R
+   functions-estimation.R
+   critere.R
+   LITree-class.R
+   package-LITree.R

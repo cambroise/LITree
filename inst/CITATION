@@ -1,0 +1,10 @@
+citHeader("To cite 'latentRootsGGM' in publications, please use:")
+
+citEntry(entry = "TechReport",
+  author = "Genevieve Robin  and Christophe Ambroise and Stephane Robin",
+  title = "Graphical model inference with unobserved variable via latent tree aggregation",
+  institution = "arXiv preprint",
+  year = "2017",
+  url = "https://arxiv.org/abs/1705.09464",
+  textVersion="Genevieve Robin  and Christophe Ambroise and Stephane Robin. Graphical model inference with unobserved variable via latent tree aggregation. arXiv preprint, 2017"
+)
