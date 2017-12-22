@@ -8,7 +8,7 @@ A simple example of what is possible using roxygen 4.1.1
 }
 \section{Usage}{
 
-\preformatted{experiment = GGM.experiment$new(methods=c("glasso","em.latent.roots"))
+\preformatted{experiment = GGM.experiment$new(methods=c("glasso","em.latent.trees"))
 }
 }
 

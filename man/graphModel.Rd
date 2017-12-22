@@ -3,11 +3,10 @@
 \docType{data}
 \name{graphModel}
 \alias{graphModel}
-\alias{graph.model}
 \title{R6 Class for simulation of Graphs}
 \format{An object of class \code{R6ClassGenerator} of length 24.}
 \usage{
-graph.model
+graphModel
 }
 \description{
 R6 Class for simulation of Graphs

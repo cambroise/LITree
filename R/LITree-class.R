@@ -40,7 +40,7 @@ NULL
 #' @import Matrix
 #' @importFrom cluster  silhouette
 #' @export
-GGM.experiment <- R6Class("GGMexperiment",
+GGMexperiment <- R6Class("GGMexperiment",
                           public=list(X.list = NULL,
                                       adjmat =NULL,
                                       nb.missing.var =NULL,
@@ -69,7 +69,7 @@ GGM.experiment <- R6Class("GGMexperiment",
                                           for (method in self$methods)
                                            {
                                             run<-run+1
-                                            GGM.fit.with.X<- GGM.fit$new(X,method=method,nb.missing.var=self$nb.missing.var,fit.number=self$fit.number)
+                                            GGM.fit.with.X<- GGMfit$new(X,method=method,nb.missing.var=self$nb.missing.var,fit.number=self$fit.number)
                                             GGM.fit.with.X$run(bagging=bagging)
                                             self$K.score.array[,,run]<-GGM.fit.with.X$K.score
                                           }}
@@ -129,7 +129,7 @@ NULL
 #' @import glasso
 #' @import bnlearn
 #' @export
-GGM.fit <- R6Class("GGMfit",
+GGMfit <- R6Class("GGMfit",
                    public=list(
                      X = NULL,
                      nb.missing.var =NULL,
@@ -231,11 +231,11 @@ GGM.fit <- R6Class("GGMfit",
 #' R6 Class for simulation of Gaussian Graphical Model
 #'
 #'
-#' @name GGMsimul
+#' @name GGMmodel
 NULL
 
 #' @export
-GGM.model  <-  R6Class("GGMsimul",
+GGMmodel  <-  R6Class("GGMmodel",
                        public = list(
                          prop.positive.cor = NULL,  # proporition of positive correlation in the correlation matrix
                          graph=NULL,  #   graph : a graph.model object with an adjancency matrix and simulation parameters
@@ -243,7 +243,7 @@ GGM.model  <-  R6Class("GGMsimul",
                          Sigma=NULL,   #   Sigma  : covariance matrix
                          missing.var.list  = NULL,  # indices of the missing variables
                          X=NULL,       # Data
-                         initialize=function(graph=NULL, prop.positive.cor=1, type="erdos",size=30, p.or.m =0.1,eta=0.2,extraeta=eta/5,nb.missing.var=0,alpha.hidden= 1.0000001,alpha.observed = 1.000000000001)
+                         initialize=function(graph=NULL, prop.positive.cor=1, type="erdos",size=30, p.or.m =0.1,eta=0.2,extraeta=eta/5,nb.missing.var=0,alpha.hidden= 2,alpha.observed = 1.2)
                          {
                            self$prop.positive.cor = prop.positive.cor
                            self$missing.var.list=NULL
@@ -294,7 +294,7 @@ GGM.model  <-  R6Class("GGMsimul",
 #' @name graphModel
 #' @import igraph
 #' @export
-graph.model <- R6Class(classname = "graphModel",
+graphModel <- R6Class(classname = "graphModel",
                        public= list(type="erdos",
                                     size=NULL,
                                     p.or.m=NULL,
@@ -323,3 +323,4 @@ graph.model <- R6Class(classname = "graphModel",
                                     plot=function(...){ plot.igraph(graph_from_adjacency_matrix(self$adjmat),...)}
                        )
 )
+

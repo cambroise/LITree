@@ -6,11 +6,12 @@
 \alias{LITree-package}
 \title{LITree: A package for infering Gaussian Graphical Models with unobserved variables using latent tree agreggation}
 \description{
-The foo package provides three classes:
-ggm.fit, ggm.evaluation, ggm.experiment
+LITree: A package for infering Gaussian Graphical Models with unobserved variables using latent tree agreggation
 }
 \author{
 Christophe Ambroise \email{christophe.ambroise@univ-evry.fr}
 
 Geneviève Robin \email{genevieve.robin@polytechnique.edu}
+
+Stéphane Robin \email{stéphane.robin@agroparistech.edu}
 }

@@ -194,24 +194,37 @@ covarianceFromGraph <- function(adjmat, prop.positive.cor=1,
   #  mineig <- 0.1+0.8*runif(1,min=0,max=1)
   #  K  <- params+(mineig-min(eigen(params, symmetric=TRUE)$values))*diag(p)
 
-  ##### 2 Christophe ######
-  params <- params*adjmat
-  degree <- rowSums(abs(params))
-  coeff<- rep(alpha.observed,p)
 
-  if (!is.null(missing.var.list))  coeff[missing.var.list]<-  alpha.hidden
-  diag(params)<- coeff *  pmax(1,degree)
+  params <- params*adjmat
+  if (!is.null(missing.var.list)) {
+    params[-missing.var.list,-missing.var.list] <- alpha.observed*params[-missing.var.list,-missing.var.list]
+    params[missing.var.list,-missing.var.list] <- alpha.hidden*params[missing.var.list,-missing.var.list]
+    params[-missing.var.list,missing.var.list] <- alpha.hidden*params[-missing.var.list,missing.var.list]
+  }
+
+  diag(params) <- 1.02 * rowSums(abs(params))
+  K  <- params
+
+
+
+  ##### 2 Christophe ######
+  #params <- params*adjmat
+  #degree <- rowSums(abs(params))
+  #coeff<- rep(alpha.observed,p)
+
+  #if (!is.null(missing.var.list))  coeff[missing.var.list]<-  alpha.hidden
+  #diag(params)<- coeff *  pmax(1,degree)
   #params<-eigen(params)$vectors %*% diag(pmax(eigen(params)$values,max(eigen(params)$values)/runif(p,min=5,max=6))) %*% t(eigen(params)$vectors)
-  K<-params
+  #K<-params
   #D      <-  diag(1/sqrt(diag(K)))
   #K  <- D%*%K%*%D
 
-  if (!is.null(missing.var.list)) {
-    Kh <- K[missing.var.list,missing.var.list]
-    Ko <- K[-missing.var.list,-missing.var.list]
-    Koh <- K[-missing.var.list,missing.var.list]
-    Km  = Ko - Koh %*%solve(Kh)%*% t(Koh)
-    print(mean((Km-Ko)^2))}
+  #if (!is.null(missing.var.list)) {
+  #  Kh <- K[missing.var.list,missing.var.list]
+  #  Ko <- K[-missing.var.list,-missing.var.list]
+  #  Koh <- K[-missing.var.list,missing.var.list]
+  #  Km  = Ko - Koh %*%solve(Kh)%*% t(Koh)
+  #  print(mean((Km-Ko)^2))}
   return(K)
 }
 
