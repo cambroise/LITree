@@ -120,5 +120,8 @@ dim(star.model.missing$getX())
 dim(star.model.missing$getXobs())
 
 star.model.missing.fit <-GGMfit$new(star.model.missing$getXobs(),fit.number = 20,method="glasso")
+star.model.missing.fit$run()
+star.model.missing.fit2 <-GGMfit$new(star.model.missing$getXobs(),nb.missing.var= 1,fit.number = 20,method="em.latent.trees")
+star.model.missing.fit2$run()
 ```
 
