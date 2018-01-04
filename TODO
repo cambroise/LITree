@@ -1,0 +1,6 @@
+* Implementing the model choice
+* Adding a demo with the data
+opt* Modifying the experiment class to allow for inference of full, marginal and conditional
+* Add a cosmetic layer for ease of use
+* Writing all the help files
+opt* Add C++ code for the latent tree part

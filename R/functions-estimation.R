@@ -200,8 +200,9 @@ treeAgr.EM <-
                                                                                   1):(p + k)]) %*% K[(p + 1):(p + k), 1:p]
         }
         it = it + 1
-        detKm<-min(log(1e300),det(Km))
-        print(likelihoods[it] <- -log(detKm) + matrix.trace(Km %*% Sigma[1:p,1:p])-n*log(2*pi)/2)
+        detKm<-max(0.1,min(1e300,det(Km)))
+        #print(detKm)
+        likelihoods[it] <- -log(detKm) + matrix.trace(Km %*% Sigma[1:p,1:p])-n*log(2*pi)/2
         error[it] = norm(alpha - alpha.tmp,type="F")
         error_[it] = abs(likelihoods[it] - likelihoods[it - 1])
       }
@@ -468,7 +469,7 @@ convex.EM <-
 
 
 initEM <- function(X = NULL,
-                   S = NULL,
+#                   S = NULL,
                    cliquelist) {
   # -----------------------------------------------------------------------------------------------------------------------------
   # FUNCTION
