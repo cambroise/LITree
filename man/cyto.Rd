@@ -3,14 +3,32 @@
 \docType{data}
 \name{cyto}
 \alias{cyto}
-\title{This is data to be included in my package}
+\title{Flow cytometry data}
+\format{A dataframe \code{X.raf} with 100 lines (cells) and 11 columns (proteins)
+ and an adjacency matrix \code{A.raf} describing the network.}
+\usage{
+data(cyto)
+}
 \description{
-This is data to be included in my package
+The Raf network is implied in the regulation of cellular proliferation.
+The data were collected by (Sachs et al., 2005).
+Flow cytometry measurements consist in sending unique cells suspended in a fluid through a laser beam, and measuring
+parameters of interest by collecting the light re-emitted by the cell by diffusion or fluores- cence.
+In this study, the parameters of interest are the activation level of 11 proteins and phospholipids involved in the Raf pathway,
+ and are measured by flow cytometry across 100 different cells.
+}
+\examples{
+data(cyto)
+times <- attr(grav, "time")
+phe <- grav$pheno
+\donttest{iplotCurves(phe, times)}
 }
 \references{
-\url{data_blah.com}
+Sachs, K., O. Perez, D. Pe’er, D. A. Lauffenburger, and G. P. Nolan (2005).
+Causal protein- signaling networks derived from multiparameter single-cell data. Science 308, 523–529.
 }
 \author{
-My Name \email{blahblah@roxygen.org}
+Christophe Ambroise \email{christophe.ambroise@univ-evry.fr}
 }
 \keyword{data}
+\keyword{datasets}

@@ -1,10 +1,21 @@
-#library(saturnin)
-em.latent.trees<- function(X,k){
-  # k is a vector of missing variable number. It should be an integer greater than 0
+LITree<- function(X,k=1, criterion = "ICL_T", max.iter = 20,eps = 0.1){
+  #########################
+  # INPUT PARAMETERS
+  #########################
+  # X is a data matrix
+  # k is a vector of missing variable number. It should be an integer greater than 0 or a vector of such integers
+  # criterion, is the name of the criterion used for selecting the best model ({"ICL_T", "ICL_ZT", "BIC" })
+  ##########################
+  # OUTPUT PARAMETERS
+  ##########################
+  # A list of three items
+  #
   if (any((k-round(k))!=0) | any(k<0)) stop("k is a vector of missing variable number. It should be an integer greater than 0")
 
   results<- vector(mode = "list",length=length(k))
 
+  # Looping all the components of  vector k
+  # ---------------------------------------------------------------------------
   results<-lapply(k,function(nb.missing.var){
    if (nb.missing.var==0) {
      initial.param$Sigma0<-cov(X)
@@ -12,12 +23,25 @@ em.latent.trees<- function(X,k){
    } else {
      initial.param<-initEM(X,cliquelist = findCliques(X,nb.missing.var+1)[1:nb.missing.var])
     }
-   em.latent.trees.res<-treeAgr.EM(S = cov(X),k=nb.missing.var, K0 = initial.param$K0, Sigma0 = initial.param$Sigma0, pii=0.5, n=nrow(X), max.iter = 20,eps = 0.1)
+   em.latent.trees.res<-treeAgr.EM(S = cov(X),k=nb.missing.var, K0 = initial.param$K0,
+                                   Sigma0 = initial.param$Sigma0,
+                                   pii=0.5, n=nrow(X), max.iter = max.iter,eps = eps)
    criteria<-modelChoiceCriteria(X,em.latent.trees.res)
    # more or less working with nb.missing.var >= 1 (criteria computed but often big
    list(criteria=criteria,em.res=em.latent.trees.res)})
 
-#  K.score <- abs(em.latent.trees.res$alpha)
+   # Post processing of the models and criteria
+   # --------------------------------------------------------------------------
+   # Collect all criteria  and models in separated structure
+   criteria<- data.frame(do.call("rbind",lapply(results, function(x) (unlist(x$criteria)))))
+   models <- lapply(results, function(x) ((x$em.res)))
+   # find the best number of missing variables according the chosen criteria
+   best.model.index <- switch(criterion,
+          ICL_T = which.max(criteria$ICL_T),
+          ICL_ZT = which.max(criteria$ICL_ZT),
+          BIC = which.max(criteria$BIC),
+          stop("Non existing criterion name"))
+  return(list( criteria = criteria , models = models, best.model = models[[best.model.index]] ))
 }
 
 

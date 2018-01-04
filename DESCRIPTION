@@ -16,7 +16,7 @@ VignetteBuilder: knitr
 Collate: 
    functions-simulation.R
    functions-estimation.R
-   critere.R
+   LITree.R
    LITree-class.R
    package-LITree.R
    data-cyto.R
