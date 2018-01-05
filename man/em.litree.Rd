@@ -4,7 +4,7 @@
 \alias{em.litree}
 \title{em.litree}
 \usage{
-em.litree(X, k = 1, criterion = "ICL_T", max.iter = 20, eps = 0.1)
+em.litree(X, k = 0:2, criterion = "ICL_T", max.iter = 20, eps = 0.1)
 }
 \arguments{
 \item{X}{X is a data matrix}
@@ -22,7 +22,11 @@ A list of three items, \code{criteria} a dataframe whose columns are the three c
 to a given number of missing variables, a list of models and the best model according the specified criterion
 }
 \description{
-em.litree
+The function \code{em.litree} implements the algorithm of Gaussian Graphical Model Inference with missing variable described
+in Robin et. al (2017). The underlying model is based on the aggregation of spanning trees,
+ and the estimation procedure on the Expectation-Maximization algorithm.
+ We treat the graph structure and the unobserved nodes as missing variables and compute posterior probabilities of edge appearance.
+To provide a complete methodology, we also propose three model selection criteria to estimate the number of missing nodes.
 }
 \examples{
 data(cyto)

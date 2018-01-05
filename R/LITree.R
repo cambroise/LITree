@@ -1,5 +1,11 @@
 #' em.litree
 #'
+#' The function \code{em.litree} implements the algorithm of Gaussian Graphical Model Inference with missing variable described
+#' in Robin et. al (2017). The underlying model is based on the aggregation of spanning trees,
+#'  and the estimation procedure on the Expectation-Maximization algorithm.
+#'  We treat the graph structure and the unobserved nodes as missing variables and compute posterior probabilities of edge appearance.
+#' To provide a complete methodology, we also propose three model selection criteria to estimate the number of missing nodes.
+#'
 #' @param X X is a data matrix
 #' @param k is a vector of missing variable number. It should be an integer greater than 0 or a vector of such integers
 #' @param criterion is the name of the criterion used for selecting the best model ({"ICL_T", "ICL_ZT", "BIC" }). ICL_T by default
@@ -21,7 +27,7 @@
 #' data(cyto)
 #' res.raf.full <- em.litree(X.raf,0:2)
 #'
-em.litree<- function(X,k=1, criterion = "ICL_T", max.iter = 20,eps = 0.1){
+em.litree<- function(X,k=0:2, criterion = "ICL_T", max.iter = 20,eps = 0.1){
   #########################
   # INPUT PARAMETERS
   #########################

@@ -1,6 +1,6 @@
 #' R6 Class for running experiment of Gaussian Graphical Model
 #'
-#' The class aims at comparing multiple Gaussian Graphical Model Inference when a ground
+#' The class aims at comparing multiple Gaussian Graphical Model Inference procedure when a ground
 #' truth is available
 #'
 #' @section Usage:
@@ -8,21 +8,21 @@
 #' }
 #'
 #' @section Arguments:
-#' \code{X.list} A list of data.frame, which will be used as input data for the inference
+#' \code{- X.list} A list of data.frame, which will be used as input data for the inference
 #'
-#' \code{adjmat} The ground truth adjacency matrix used for the evaluation (roc curve)
+#' \code{- adjmat} The ground truth adjacency matrix used for the evaluation (roc curve)
 #'
-#' \code{nb.missing.var} Number of missing variable (0 by default)
+#' \code{- nb.missing.var} Number of missing variable (0 by default)
 #'
-#' \code{methods} A vector of characters list the methods to be tested (see GGMfit for the list of possible methods)
+#' \code{- methods} A vector of characters list the methods to be tested (see GGMfit for the list of possible methods)
 #'
-#' \code{fit.number} Number of evaluation point (20 by default)
+#' \code{- fit.number} Number of evaluation point (20 by default)
 #'
-#' \code{nb.sample}  Number of data frame in X.list (set automatically while initializing the object)
+#' \code{- nb.sample}  Number of data frame in X.list (set automatically while initializing the object)
 #'
-#' \code{K.score.array}  Array of prediction of edges. The array is 3 dimensional (2 first dimension for storing a results, third dimension for compiling all results)
+#' \code{- K.score.array}  Array of prediction of edges. The array is 3 dimensional (2 first dimension for storing a results, third dimension for compiling all results)
 #'
-#' \code{prediction} A dataframe with 3 columns (prediction, label and method) used for methods evaluation
+#' \code{- prediction} A dataframe with 3 columns (prediction, label and method) used for methods evaluation
 #'
 #'
 #' @section Methods:
@@ -30,7 +30,7 @@
 #'
 #' \code{$run(bagging=FALSE)} Running the experiment (with or without using bagging)
 #'
-#' @param{$roc.plot()} Plot the roc curves (all methods on the same plot)
+#' \code{$roc.plot()} Plot the roc curves (all methods on the same plot)
 #' @name GGMexperiment
 #' @examples
 #' \dontrun{
@@ -138,8 +138,52 @@ GGMexperiment <- R6Class("GGMexperiment",
 
 #' R6 Class for estimation of Gaussian Graphical Model
 #'
+#' The Class \code{GGMfit} estimate a Gaussian Graphical Model. It can use 5 different models and associated estimation procedure
+#'  with or without bagging.
+#'  Three of the algorithms (\code{em.latent.trees}, \code{em.glasso}, \code{em.chow.liu}) take into account missing variables while the two other do not (\code{glasso},
+#'  \code{chow.liu}).
+#"
+#'
+#' @section Usage:
+#' \preformatted{experiment = GGMfit$new(X,method="glasso",nb.missing.var=0,fit.number=20,...)
+#' }
+#'
+#' @section Arguments:
+#' \code{- X} A data.frame, which will be used as input data for the inference
+#'
+#' \code{- nb.missing.var} Number of missing variable (0 by default)
+#'
+#' \code{- method} The  name of the  estimation procedure (\code{em.latent.trees}, \code{em.glasso}, \code{em.chow.liu}, \code{glasso},
+#'  \code{chow.liu})
+#'
+#' \code{- fit.number} Number of evaluation point (20 by default)
+#'
+#'
+#' \code{- K.score}  Array of prediction of edges. The array is 2 dimensional homogeneous in dimension to the adjacency matrix of the graph to be inferred.
+#'
+#'
+#'
+#' @section Methods:
+#' \code{$new(X,method="glasso",nb.missing.var=0,fit.number=20,...)} Initialize the experiment
+#'
+#' \code{$run(bagging=FALSE,nb.bootstrap=29)} Running the experiment (with or without using bagging)
 #'
 #' @name GGMfit
+#' @examples
+#' \dontrun{
+#' star.graph <- graphModel$new(type = "starerdos",size=30, p.or.m = 0.05)
+#' star.model <- GGMmodel$new(graph=star.graph)
+#' star.model.missing <- GGMmodel$new(graph=star.graph,nb.missing.var= 1)
+#' dim(star.model.missing$getAdjmat())
+#' dim(star.model.missing$getAdjmatCond())
+#' star.model.missing$randomSample(n=60)
+#' dim(star.model.missing$getX())
+#' dim(star.model.missing$getXobs())
+#' star.model.missing.fit <-GGMfit$new(star.model.missing$getXobs(),fit.number = 20,method="glasso")
+#' star.model.missing.fit$run()
+#' star.model.missing.fit2 <-GGMfit$new(star.model.missing$getXobs(),nb.missing.var= 1,fit.number = 20,method="em.latent.trees")
+#' star.model.missing.fit2$run()
+#' }
 NULL
 
 #' @import glasso

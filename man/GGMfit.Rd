@@ -4,5 +4,52 @@
 \alias{GGMfit}
 \title{R6 Class for estimation of Gaussian Graphical Model}
 \description{
-R6 Class for estimation of Gaussian Graphical Model
+The Class \code{GGMfit} estimate a Gaussian Graphical Model. It can use 5 different models and associated estimation procedure
+ with or without bagging.
+ Three of the algorithms (\code{em.latent.trees}, \code{em.glasso}, \code{em.chow.liu}) take into account missing variables while the two other do not (\code{glasso},
+ \code{chow.liu}).
+}
+\section{Usage}{
+
+\preformatted{experiment = GGMfit$new(X,method="glasso",nb.missing.var=0,fit.number=20,...)
+}
+}
+
+\section{Arguments}{
+
+\code{- X} A data.frame, which will be used as input data for the inference
+
+\code{- nb.missing.var} Number of missing variable (0 by default)
+
+\code{- method} The  name of the  estimation procedure (\code{em.latent.trees}, \code{em.glasso}, \code{em.chow.liu}, \code{glasso},
+ \code{chow.liu})
+
+\code{- fit.number} Number of evaluation point (20 by default)
+
+
+\code{- K.score}  Array of prediction of edges. The array is 2 dimensional homogeneous in dimension to the adjacency matrix of the graph to be inferred.
+}
+
+\section{Methods}{
+
+\code{$new(X,method="glasso",nb.missing.var=0,fit.number=20,...)} Initialize the experiment
+
+\code{$run(bagging=FALSE,nb.bootstrap=29)} Running the experiment (with or without using bagging)
+}
+
+\examples{
+\dontrun{
+star.graph <- graphModel$new(type = "starerdos",size=30, p.or.m = 0.05)
+star.model <- GGMmodel$new(graph=star.graph)
+star.model.missing <- GGMmodel$new(graph=star.graph,nb.missing.var= 1)
+dim(star.model.missing$getAdjmat())
+dim(star.model.missing$getAdjmatCond())
+star.model.missing$randomSample(n=60)
+dim(star.model.missing$getX())
+dim(star.model.missing$getXobs())
+star.model.missing.fit <-GGMfit$new(star.model.missing$getXobs(),fit.number = 20,method="glasso")
+star.model.missing.fit$run()
+star.model.missing.fit2 <-GGMfit$new(star.model.missing$getXobs(),nb.missing.var= 1,fit.number = 20,method="em.latent.trees")
+star.model.missing.fit2$run()
+}
 }
