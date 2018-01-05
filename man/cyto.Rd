@@ -19,9 +19,7 @@ In this study, the parameters of interest are the activation level of 11 protein
 }
 \examples{
 data(cyto)
-times <- attr(grav, "time")
-phe <- grav$pheno
-\donttest{iplotCurves(phe, times)}
+\donttest{plot.igraph(graph_from_adjacency_matrix(A.raf),edge.arrow.size=0, vertex.color="gold", vertex.size=15, vertex.frame.color="gray", vertex.label.color="black", vertex.label.cex=0.8,vertex.label.dist=0)}
 }
 \references{
 Sachs, K., O. Perez, D. Pe’er, D. A. Lauffenburger, and G. P. Nolan (2005).

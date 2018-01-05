@@ -1,4 +1,27 @@
-LITree<- function(X,k=1, criterion = "ICL_T", max.iter = 20,eps = 0.1){
+#' em.litree
+#'
+#' @param X X is a data matrix
+#' @param k is a vector of missing variable number. It should be an integer greater than 0 or a vector of such integers
+#' @param criterion is the name of the criterion used for selecting the best model ({"ICL_T", "ICL_ZT", "BIC" }). ICL_T by default
+#' @param max.iter is the maximum number of iterations (20 by default)
+#' @param eps is the precision used for stopping the algorithm
+#'
+#' @return A list of three items, \code{criteria} a dataframe whose columns are the three critera and each lines corresponds
+#' to a given number of missing variables, a list of models and the best model according the specified criterion
+#'
+#' @references  Geneviève Robin, Christophe Ambroise, Stéphane Robin (Submitted on 26 May 2017).
+#' Graphical model inference with unobserved variable via latent tree aggregation. Arxiv Paper.
+#' \url{https://arxiv.org/abs/1705.09464}
+#'
+#' @export
+#' @import Matrix
+#' @importFrom pracma pinv
+#' @importFrom igraph plot.igraph
+#' @examples
+#' data(cyto)
+#' res.raf.full <- em.litree(X.raf,0:2)
+#'
+em.litree<- function(X,k=1, criterion = "ICL_T", max.iter = 20,eps = 0.1){
   #########################
   # INPUT PARAMETERS
   #########################
@@ -13,7 +36,7 @@ LITree<- function(X,k=1, criterion = "ICL_T", max.iter = 20,eps = 0.1){
   if (any((k-round(k))!=0) | any(k<0)) stop("k is a vector of missing variable number. It should be an integer greater than 0")
 
   results<- vector(mode = "list",length=length(k))
-
+  initial.param <- vector(mode = "list",length=2)
   # Looping all the components of  vector k
   # ---------------------------------------------------------------------------
   results<-lapply(k,function(nb.missing.var){
@@ -62,6 +85,9 @@ modelChoiceCriteria <- function(X, EM.res,pii=0.5){
   diag(P)=0
   delta=-exp(log_gamma)
   diag(delta)=rowSums(exp(log_gamma))
+  print(det(delta[2:q,2:q]))
+  print(q)
+  print(p)
   H.T=log(det(delta[2:q,2:q]))-sum(sum(log_gamma*alpha)) # Entropy of trees
   #H.T=sum(log(d))-sum(sum(log_gamma*alpha)) # Entropy of trees
    if (r==0){ # no missing variable

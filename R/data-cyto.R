@@ -21,9 +21,7 @@
 #'
 #' @examples
 #' data(cyto)
-#' times <- attr(grav, "time")
-#' phe <- grav$pheno
-#' \donttest{iplotCurves(phe, times)}
+#' \donttest{plot.igraph(graph_from_adjacency_matrix(A.raf),edge.arrow.size=0, vertex.color="gold", vertex.size=15, vertex.frame.color="gray", vertex.label.color="black", vertex.label.cex=0.8,vertex.label.dist=0)}
 #' @name cyto
 #' @author Christophe Ambroise \email{christophe.ambroise@@univ-evry.fr}
 #' @keywords data
