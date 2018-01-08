@@ -2,7 +2,58 @@
 % Please edit documentation in R/LITree-class.R
 \name{GGMmodel}
 \alias{GGMmodel}
-\title{R6 Class for simulation of Gaussian Graphical Model}
+\title{R6 Class for simulating Gaussian Graphical Model}
 \description{
-R6 Class for simulation of Gaussian Graphical Model
+The Class \code{GGMmodel} simulate Gaussian Graphical Model. It can use many different models
+}
+\section{Usage}{
+
+\preformatted{experiment = GGMmodel$new(graph=NULL, prop.positive.cor=1, type="erdos",size=30, p.or.m =0.1,eta=0.2,extraeta=eta/5,nb.missing.var=0,alpha.hidden= 2,alpha.observed = 1.2)
+}
+}
+
+\section{Arguments}{
+
+\code{- prop.positive.cor} A real number indicating the proportion of positive correlation (1 by default)
+
+\code{- graph} A graph object
+
+\code{- K}  K  Precision matrix derived from the Graph
+
+\code{- Sigma} Covariance matrix derived from the Graph
+
+\code{- missing.var.list}   indices of the missing variables if any
+
+\code{- X} Simulated data using a Gaussian model with zero mean vector and covariance matrix of the object
+}
+
+\section{Methods}{
+
+\code{$new(graph=NULL, prop.positive.cor=1, type="erdos",size=30, p.or.m =0.1,eta=0.2,extraeta=eta/5,nb.missing.var=0,alpha.hidden= 2,alpha.observed = 1.2)}
+Initialize the model
+
+\code{$getAdjmat()} returns the adjacency matrix of the graph,
+
+\code{$getAdjmatCond()} returns the conditional adjacency matrix if there is missing data
+
+\code{$getAdjmatMarg=()} returns the marginal adjacency matrix if there is missing data
+
+ \code{$randomSample(n=100)}  generates a random sample of size n accissible through the argument X
+
+ \code{$getX()} access the generated Data
+
+ \code{$getXobs()} access the observed part of the generated Data
+
+ \code{getXmis()} access the missing part of the generated Data
+
+ \code{plot()} plot the generated Data matrix
+}
+
+\examples{
+\dontrun{
+star.graph <- graphModel$new(type = "starerdos",size=30, p.or.m = 0.05)
+star.model <- GGMmodel$new(graph=star.graph)
+plot(star.model)
+star.model$randomSample(n=50)
+}
 }
