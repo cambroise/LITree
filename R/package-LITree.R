@@ -2,7 +2,7 @@
 #'
 #' @section Classes
 #'
-#' The LITree package provides three classes  ggm.model, ggm.fit,  and  ggm.experiment
+#' The LITree package provides four classes  graphModel, GGMmodel, GGMfit,  GGMexperiment and one function em.litree()
 #'
 #'  TODO
 #' @author Christophe Ambroise \email{christophe.ambroise@@univ-evry.fr}
