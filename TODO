@@ -1,6 +1,0 @@
-* Implementing the model choice -- DONE but problem with value of criteria which is often too large
-* Adding a demo with the data
-opt* Modifying the experiment class to allow for inference of full, marginal and conditional
-* Add a cosmetic layer for ease of use
-* Writing all the help files
-opt* Add C++ code for the latent tree part
