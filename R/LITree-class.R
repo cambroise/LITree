@@ -47,7 +47,6 @@
 NULL
 
 #' @importFrom R6 R6Class
-#' @import simone
 #' @import ggplot2
 #' @importFrom MASS mvrnorm
 #' @importFrom  ROCR   prediction   performance
@@ -447,7 +446,7 @@ graphModel <- R6Class(classname = "graphModel",
                                              sparse={},
                                              dense={self$p.or.m=1},
                                              GGMselect={self$eta=eta; self$extraeta=extraeta},
-                                             simone={self$eta=eta; self$extraeta=extraeta},
+                                             #simone={self$eta=eta; self$extraeta=extraeta},
                                              star={},
                                              doublestar={},
                                              hmm ={},

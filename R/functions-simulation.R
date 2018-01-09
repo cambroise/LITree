@@ -70,14 +70,14 @@ buildGraph <- function(graph.type=c("sparse",
            }
            print("GGMselect graph generated")
          },
-         simone={
-           alpha    <- c(eta, eta, eta)
-           pi       <- matrix(extraeta, 3, 3)
-           diag(pi) <- eta
-           net      <- rNetwork(p, pi, alpha, directed=FALSE, signed=TRUE)
-           adjmat   <- net$A/2
-           print("simone graph generated")
-         },
+         # simone={
+         #   alpha    <- c(eta, eta, eta)
+         #   pi       <- matrix(extraeta, 3, 3)
+         #   diag(pi) <- eta
+         #   net      <- rNetwork(p, pi, alpha, directed=FALSE, signed=TRUE)
+         #   adjmat   <- net$A/2
+         #   print("simone graph generated")
+         # },
          star={
            M              <-  p+1
            adjmat         <- matrix(0,M,M)
